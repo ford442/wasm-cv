@@ -9,7 +9,6 @@
 extern "C" {
 #endif
 
-// Set all of an image buffer's pixel values to a specified value
 EMSCRIPTEN_KEEPALIVE unsigned char* level(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
 	for (int i = 0; i < project->size; i += 4) {
 		outputBuf[i] = r;
@@ -19,40 +18,30 @@ EMSCRIPTEN_KEEPALIVE unsigned char* level(unsigned char inputBuf[], unsigned cha
 	}
 	return outputBuf;
 }
-
-// Set all of an image buffer's r channel to a specified value
 EMSCRIPTEN_KEEPALIVE unsigned char* levelR(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, unsigned char r) {
 	for (int i = 0; i < project->size; i += 4) {
 		outputBuf[i] = r;
 	}
 	return outputBuf;
 }
-
-// Set all of an image buffer's g channel to a specified value
 EMSCRIPTEN_KEEPALIVE unsigned char* levelG(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, unsigned char g) {
 	for (int i = 1; i < project->size; i += 4) {
 		outputBuf[i] = g;
 	}
 	return outputBuf;
 }
-
-// Set all of an image buffer's b channel to a specified value
 EMSCRIPTEN_KEEPALIVE unsigned char* levelB(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, unsigned char b) {
 	for (int i = 2; i < project->size; i += 4) {
 		outputBuf[i] = b;
 	}
 	return outputBuf;
 }
-
-// Set all of an image buffer's a channel to a specified value
 EMSCRIPTEN_KEEPALIVE unsigned char* levelA(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, unsigned char a) {
 	for (int i = 3; i < project->size; i += 4) {
 		outputBuf[i] = a;
 	}
 	return outputBuf;
 }
-
-// Invert an RGBA image
 EMSCRIPTEN_KEEPALIVE unsigned char* invert(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project) {
 	for (int i = 0; i < project->size; i += 4) {
 		outputBuf[i] = 255 - inputBuf[i];
@@ -62,8 +51,6 @@ EMSCRIPTEN_KEEPALIVE unsigned char* invert(unsigned char inputBuf[], unsigned ch
 	}
 	return outputBuf;
 }
-
-// Shift an RGBA image left
 EMSCRIPTEN_KEEPALIVE unsigned char* shiftLeft(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, int d = 1) {
 	for (int i = 0; i < project->size; i += 4) {
 		outputBuf[i] = inputBuf[i + d * 4];
@@ -73,8 +60,6 @@ EMSCRIPTEN_KEEPALIVE unsigned char* shiftLeft(unsigned char inputBuf[], unsigned
 	}
 	return outputBuf;
 }
-
-// Shift an RGBA image right
 EMSCRIPTEN_KEEPALIVE unsigned char* shiftRight(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, int d = 1) {
 	for (int i = 0; i < project->size; i += 4) {
 		outputBuf[i] = inputBuf[i - d * 4];
@@ -84,8 +69,6 @@ EMSCRIPTEN_KEEPALIVE unsigned char* shiftRight(unsigned char inputBuf[], unsigne
 	}
 	return outputBuf;
 }
-
-// Shift an RGBA image up
 EMSCRIPTEN_KEEPALIVE unsigned char* shiftUp(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, int d = 1) {
 	for (int i = 0; i < project->size; i += 4) {
 		outputBuf[i] = inputBuf[i + d * project->w * 4];
@@ -95,8 +78,6 @@ EMSCRIPTEN_KEEPALIVE unsigned char* shiftUp(unsigned char inputBuf[], unsigned c
 	}
 	return outputBuf;
 }
-
-// Shift an RGBA image down
 EMSCRIPTEN_KEEPALIVE unsigned char* shiftDown(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, int d = 1) {
 	for (int i = 0; i < project->size; i += 4) {
 		outputBuf[i] = inputBuf[i - d * project->w * 4];
@@ -106,8 +87,6 @@ EMSCRIPTEN_KEEPALIVE unsigned char* shiftDown(unsigned char inputBuf[], unsigned
 	}
 	return outputBuf;
 }
-
-// Lighten an RGBA image
 EMSCRIPTEN_KEEPALIVE unsigned char* lighten(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, int v) {
 	for (int i = 0; i < project->size; i += 4) {
 		outputBuf[i] = std::clamp(inputBuf[i] + v, 0, 255);
@@ -117,8 +96,6 @@ EMSCRIPTEN_KEEPALIVE unsigned char* lighten(unsigned char inputBuf[], unsigned c
 	}
 	return outputBuf;
 }
-
-// Darken an RGBA image
 EMSCRIPTEN_KEEPALIVE unsigned char* darken(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, int b) {
 	for (int i = 0; i < project->size; i += 4) {
 		outputBuf[i] = std::clamp(inputBuf[i] - b, 0, 255);
@@ -128,8 +105,6 @@ EMSCRIPTEN_KEEPALIVE unsigned char* darken(unsigned char inputBuf[], unsigned ch
 	}
 	return outputBuf;
 }
-
-// Contrast stretch an RGBA image
 EMSCRIPTEN_KEEPALIVE unsigned char* contrast(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, int g, int b) {
 	for (int i = 0; i < project->size; i += 4) {
 		outputBuf[i] = std::clamp(inputBuf[i] * g + b, 0, 255);
@@ -139,8 +114,6 @@ EMSCRIPTEN_KEEPALIVE unsigned char* contrast(unsigned char inputBuf[], unsigned 
 	}
 	return outputBuf;
 }
-
-// Convert an RGBA image to simulated grayscale colorspace
 EMSCRIPTEN_KEEPALIVE unsigned char* toGrayscale(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project) {
 	unsigned char* outputBuf = pool->getNew();
 	for (int i = 0; i < project->size; i += 4) {
@@ -152,9 +125,6 @@ EMSCRIPTEN_KEEPALIVE unsigned char* toGrayscale(unsigned char inputBuf[], Buffer
 	}
 	return outputBuf;
 }
-
-// Median filter a color image
-// TODO: refactor to use sorting networks
 EMSCRIPTEN_KEEPALIVE unsigned char* medianRGBA(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project) {
 	std::array<int, 9> o = project->offsets._3x3;
 	int histR[256] = {0};

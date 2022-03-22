@@ -5,7 +5,6 @@
 extern "C" {
 #endif
 
-// Class declarations
 class NeighborhoodOffsets;
 class BinaryStructuringElement2x2;
 class BinaryStructuringElement3x3;
@@ -16,14 +15,11 @@ class BufferPool;
 class Pixel;
 class ImageBuffer;
 
-
-// Function prototypes
 EMSCRIPTEN_KEEPALIVE Wasmcv* init(int w, int h);
 EMSCRIPTEN_KEEPALIVE bool isInImageBounds(Wasmcv* project, int offset);
 EMSCRIPTEN_KEEPALIVE std::vector<int> offsetToVec2(int offset, Wasmcv* project);
 EMSCRIPTEN_KEEPALIVE int vec2ToOffset(int x, int y, Wasmcv* project);
 
-// Class for a collection of pixel neighborhood 1D offsets
 class NeighborhoodOffsets {
 	public:
 	NeighborhoodOffsets(int w) {
@@ -83,7 +79,6 @@ class NeighborhoodOffsets {
 		}
 	}
 	NeighborhoodOffsets() {
-
 	}
 	std::array<int, 5> _4n;
 	std::array<int, 4> _2x2;
@@ -97,8 +92,6 @@ class NeighborhoodOffsets {
 	std::array<int, 289> _17x17;
 	std::array<int, 361> _19x19;
 };
-
-// Class for a 2x2 binary structuring element
 class BinaryStructuringElement2x2 {
 	public:
 		BinaryStructuringElement2x2(std::array<unsigned char, 4> kernel) {
@@ -115,7 +108,6 @@ class BinaryStructuringElement2x2 {
 			}
 		}
 		BinaryStructuringElement2x2() {
-
 		}
 		std::array<unsigned char, 4> kernel;
 		int w;
@@ -124,8 +116,6 @@ class BinaryStructuringElement2x2 {
 		int positives;
 		int origin;
 };
-
-// Class for a 3x3 binary structuring element
 class BinaryStructuringElement3x3 {
 	public:
 		BinaryStructuringElement3x3(std::array<unsigned char, 9> kernel) {
@@ -142,7 +132,6 @@ class BinaryStructuringElement3x3 {
 			}
 		}
 		BinaryStructuringElement3x3() {
-
 		}
 		std::array<unsigned char, 9> kernel;
 		int w;
@@ -151,8 +140,6 @@ class BinaryStructuringElement3x3 {
 		int positives;
 		int origin;
 };
-
-// Class for a 5x5 binary structuring element
 class BinaryStructuringElement5x5 {
 	public:
 		BinaryStructuringElement5x5(std::array<unsigned char, 25> kernel) {
@@ -169,7 +156,6 @@ class BinaryStructuringElement5x5 {
 			}
 		}
 		BinaryStructuringElement5x5() {
-
 		}
 		std::array<unsigned char, 25> kernel;
 		int w;
@@ -178,8 +164,6 @@ class BinaryStructuringElement5x5 {
 		int positives;
 		int origin;
 };
-
-// Static class for a library of structuring elements (used for morphological erosion, dilation, opening and closing)
 class Se {
 	public:
 		Se() {
@@ -221,8 +205,6 @@ class Se {
 		BinaryStructuringElement5x5 _5x5disc;
 		BinaryStructuringElement5x5 _5x5ring;
 };
-
-// Class for a wasm-cv project 
 class Wasmcv {
 	public:
 		Wasmcv(int w, int h) {
@@ -249,8 +231,6 @@ class Wasmcv {
 		NeighborhoodOffsets offsets;
 		Se se;
 };
-
-// Class for a buffer pool
 class BufferPool {
 	public:
 		BufferPool(int w, int h) {
@@ -264,7 +244,6 @@ class BufferPool {
 			this->current = 0;
 		}
 		BufferPool() {
-
 		}
 		~BufferPool() {
 			delete [] this->buffers[0];
@@ -296,9 +275,6 @@ class BufferPool {
 		int size;
 		std::array<unsigned char*, 6> buffers;
 };
-
-// Class for a HTML5 canvas pixel
-// TODO: Actually use this?
 class Pixel {
 	public:
 		Pixel(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
@@ -315,9 +291,6 @@ class Pixel {
 		unsigned char b;
 		unsigned char a;
 };
-
-// Class for an image buffer 
-// TODO: Actually use this?
 class ImageBuffer {
 	public:
 		ImageBuffer(int w, int h) {
@@ -327,7 +300,6 @@ class ImageBuffer {
 			this->data = new unsigned char[w * h];
 		}
 		ImageBuffer() {
-
 		}
 		~ImageBuffer() {
 			delete [] this->data;

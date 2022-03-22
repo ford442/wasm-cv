@@ -19,7 +19,6 @@
 extern "C" {
 #endif
 
-// Function prototypes
 EMSCRIPTEN_KEEPALIVE unsigned char* demoDilate5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project);
 EMSCRIPTEN_KEEPALIVE unsigned char* demoErode5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project);
 EMSCRIPTEN_KEEPALIVE unsigned char* demoOpen5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project);
@@ -33,25 +32,19 @@ int main() {
 	std::cout << "Hello world! Love, C++ main()\n";
 	return 0;
 }
-
 EMSCRIPTEN_KEEPALIVE unsigned char* demoDilate5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project) {
 	return kDilate5x5(inputBuf, pool, project, project->se._5x5iso);
 }
-
 EMSCRIPTEN_KEEPALIVE unsigned char* demoErode5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project) {
 	return kErode5x5(inputBuf, pool, project, project->se._5x5iso);
 }
-
 EMSCRIPTEN_KEEPALIVE unsigned char* demoOpen5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project) {
 	return open5x5(inputBuf, pool, project, project->se._5x5iso);
 }
-
 EMSCRIPTEN_KEEPALIVE unsigned char* demoClose5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project) {
 	return close5x5(inputBuf, pool, project, project->se._5x5iso);
 }
-
 EMSCRIPTEN_KEEPALIVE void update() {
-	// Get state of UI checkboxes
 	int grayscaleChecked = EM_ASM_INT(return toGrayscale.checked);
 	int thresholdChecked = EM_ASM_INT(return threshold.checked);
 	int medianChecked = EM_ASM_INT(return median.checked);
@@ -66,28 +59,23 @@ EMSCRIPTEN_KEEPALIVE void update() {
 	int centroidsChecked = EM_ASM_INT(return centroids.checked);
 	int perimeterChecked = EM_ASM_INT(return perimeter.checked);
 	int boundingChecked = EM_ASM_INT(return bounding.checked);
-	// Do some js stuff
 	EM_ASM(
 		outputOverlayCtx.clearRect(0, 0, webcamWidth, webcamHeight);
 		t1 = performance.now();
 		inputCtx.drawImage(video, 0, 0);
 		inputImgData = inputCtx.getImageData(0, 0, webcamWidth, webcamHeight);
 	);
-	// Copy the input imgdata object to the heap and get a C++ pointer to it
-	// This is allocating space on the C++ heap using javascript from within a C++ function
 	int inputBufInt = EM_ASM_INT(
 		const inputBuf = Module._malloc(inputImgData.data.length);
 		Module.HEAPU8.set(inputImgData.data, inputBuf);
 		return inputBuf;
 	);
 	unsigned char* inputBuf = (unsigned char*)inputBufInt;
-	// Do some C++ stuff
 	bufferPool->copyToNew(inputBuf);
 	if (grayscaleChecked) {
 		toGrayscale(bufferPool->getCurrent(), bufferPool, project);
 		auto integral = makeIntegralImage(bufferPool->getCurrent(), project);
 	}
-
 	if (thresholdChecked) otsu(bufferPool->getCurrent(), bufferPool, project);
 	if (medianChecked) median3x3(bufferPool->getCurrent(), bufferPool, project);
 	if (dilateChecked) demoDilate5x5(bufferPool->getCurrent(), bufferPool, project);
@@ -95,11 +83,9 @@ EMSCRIPTEN_KEEPALIVE void update() {
 	if (openChecked) demoOpen5x5(bufferPool->getCurrent(), bufferPool, project);
 	if (closeChecked) demoClose5x5(bufferPool->getCurrent(), bufferPool, project);
 	if (edgesChecked) findEdges(bufferPool->getCurrent(), bufferPool, project);
-	// Keep a pointer to the processed image for the left hand display
 	unsigned char* processedImage = bufferPool->getCurrent();
 	if (cornersChecked) {
 		auto corners = findAllCorners(processedImage, project);
-		// Do js stuff within a C++ for loop
 		for (int i = 0; i < corners.size(); i += 1) {
 			auto vec2 = offsetToVec2(corners[i], project);
 			EM_ASM_({
@@ -178,15 +164,13 @@ EMSCRIPTEN_KEEPALIVE void update() {
 			}, project->centerX, project->centerY);
 			if (boundingChecked) {
 				auto boundingBox = getBoundingBox(perimeterMap, project);
-
 				auto val = getSecondOrderColumnMoment(segmentationMap, segmentationMap[615683], project);
 				std::cout << val << std::endl;
-
 				EM_ASM({
 					outputOverlayCtx.strokeStyle = '#005ce6';
 					outputOverlayCtx.lineWidth = 4;
 					outputOverlayCtx.beginPath();
-					outputOverlayCtx.rect($0, $1, $2, $3); // Passing C++ variables to a javascript function
+					outputOverlayCtx.rect($0, $1, $2, $3);
 					outputOverlayCtx.stroke();
 				}, boundingBox[0], boundingBox[1], boundingBox[2], boundingBox[3]);
 			}
@@ -208,14 +192,13 @@ EMSCRIPTEN_KEEPALIVE void update() {
 			bounding.disabled = true;
 		);
 	}
-	// Do some js stuff with C++ variables
 	EM_ASM_({
 		const outputImgData = new ImageData(webcamWidth, webcamHeight);
 		for (var i = 0, len = outputImgData.data.length; i < len; i += 1) {
 			outputImgData.data[i] = Module.HEAPU8[$0 + i];
 		}
 		outputCtx.putImageData(outputImgData, 0, 0);
-		Module._free($1); // Passing a C++ variable to a javascript function that is calling a C++ function from within a C++ function
+		Module._free($1);
 		t2 = performance.now() - t1;
 		outputCtx.font = '30px Arial';
 		outputCtx.fillStyle = 'red';

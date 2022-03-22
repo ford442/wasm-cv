@@ -4,7 +4,6 @@
 extern "C" {
 #endif
 
-// Function prototypes
 EMSCRIPTEN_KEEPALIVE unsigned char* level(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 EMSCRIPTEN_KEEPALIVE unsigned char* levelR(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, unsigned char r);
 EMSCRIPTEN_KEEPALIVE unsigned char* levelG(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, unsigned char g);
