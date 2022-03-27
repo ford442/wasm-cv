@@ -47,6 +47,7 @@ EMSCRIPTEN_KEEPALIVE unsigned char* demoClose5x5(unsigned char inputBuf[], Buffe
 EMSCRIPTEN_KEEPALIVE void update() {
 	int grayscaleChecked = EM_ASM_INT(return toGrayscale.checked);
 	int thresholdChecked = EM_ASM_INT(return threshold.checked);
+	int medianChecked = EM_ASM_INT(return median.checked);
 	int dilateChecked = EM_ASM_INT(return dilate.checked);
 	int erodeChecked = EM_ASM_INT(return erode.checked);
 	int openChecked = EM_ASM_INT(return open.checked);
@@ -76,6 +77,7 @@ EMSCRIPTEN_KEEPALIVE void update() {
 		auto integral = makeIntegralImage(bufferPool->getCurrent(), project);
 	}
 	if (thresholdChecked) otsu(bufferPool->getCurrent(), bufferPool, project);
+	if (medianChecked) median3x3(bufferPool->getCurrent(), bufferPool, project);
 	if (dilateChecked) demoDilate5x5(bufferPool->getCurrent(), bufferPool, project);
 	if (erodeChecked) demoErode5x5(bufferPool->getCurrent(), bufferPool, project);
 	if (openChecked) demoOpen5x5(bufferPool->getCurrent(), bufferPool, project);

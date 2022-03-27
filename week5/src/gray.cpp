@@ -70,6 +70,39 @@ EMSCRIPTEN_KEEPALIVE unsigned char* otsu(unsigned char inputBuf[], BufferPool* p
 	}
 	return threshold(inputBuf, pool, project, thresh);
 }
+EMSCRIPTEN_KEEPALIVE unsigned char* median3x3(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project) {
+	unsigned char* outputBuf = pool->getNew();
+	std::array<int, 9> o = project->offsets._3x3;
+	unsigned char hist[9];
+	for (int i = 3; i < project->size; i += 4) {
+		for (int j = 0; j < 9; j += 1){
+			hist[j] = inputBuf[i + o[j]];
+		}
+		if (hist[0] > hist[1]) std::swap(hist[0], hist[1]);
+		if (hist[3] > hist[4]) std::swap(hist[3], hist[4]);
+		if (hist[6] > hist[7]) std::swap(hist[6], hist[7]);
+		if (hist[1] > hist[2]) std::swap(hist[1], hist[2]);
+		if (hist[4] > hist[5]) std::swap(hist[4], hist[5]);
+		if (hist[7] > hist[8]) std::swap(hist[7], hist[8]);
+		if (hist[0] > hist[1]) std::swap(hist[0], hist[1]);
+		if (hist[3] > hist[4]) std::swap(hist[3], hist[4]);
+		if (hist[6] > hist[7]) std::swap(hist[6], hist[7]);
+		if (hist[2] > hist[5]) std::swap(hist[2], hist[5]);
+		if (hist[1] > hist[4]) std::swap(hist[1], hist[4]);
+		if (hist[3] > hist[6]) std::swap(hist[3], hist[6]);
+		if (hist[4] > hist[7]) std::swap(hist[4], hist[7]);
+		if (hist[2] > hist[5]) std::swap(hist[2], hist[5]);
+		if (hist[1] > hist[4]) std::swap(hist[1], hist[4]);
+		if (hist[2] > hist[6]) std::swap(hist[2], hist[6]);
+		if (hist[4] > hist[6]) std::swap(hist[4], hist[6]);
+		if (hist[2] > hist[4]) std::swap(hist[2], hist[4]);
+		outputBuf[i - 3] = 0;
+		outputBuf[i - 2] = 0;
+		outputBuf[i - 1] = 0;
+	    outputBuf[i] = hist[4];
+	}
+	return outputBuf;
+}
 EMSCRIPTEN_KEEPALIVE unsigned char* rank3x3(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project, int r = 5) {
 	std::array<int, 9> o = project->offsets._3x3;
 	for (int i = 3; i < project->size; i += 4) {
