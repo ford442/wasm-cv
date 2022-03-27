@@ -18,7 +18,6 @@ const outputOverlayCtx = outputOverlayCanvas.getContext("2d");
 const inputCtx = inputCanvas.getContext("2d");
 let toGrayscale = document.getElementById("toGrayscale");
 let threshold = document.getElementById("threshold");
-let edges = document.getElementById("findEdges");
 let corners = document.getElementById("findCorners");
 let segments = document.getElementById("findSegments");
 let segmentVisualizer = document.getElementById("visualizeSegments");
