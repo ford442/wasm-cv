@@ -71,7 +71,6 @@ EMSCRIPTEN_KEEPALIVE unsigned char* otsu(unsigned char inputBuf[], BufferPool* p
 	return threshold(inputBuf, pool, project, thresh);
 }
 
-
 #ifdef __cplusplus
 }
 #endif

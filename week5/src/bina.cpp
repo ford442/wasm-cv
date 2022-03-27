@@ -46,14 +46,6 @@ EMSCRIPTEN_KEEPALIVE unsigned char* erode(unsigned char inputBuf[], unsigned cha
 	}
 	return outputBuf;
 }
-EMSCRIPTEN_KEEPALIVE unsigned char* findEdges(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project) {
-	unsigned char* outputBuf = pool->getNew();
-	for (int i = 3; i < project->size; i += 4) {
-		int sigma = sumNeighbors(inputBuf, i, project->w);
-		outputBuf[i] = sigma == 2040 ? 0 : inputBuf[i];
-	}
-	return outputBuf;
-}
 EMSCRIPTEN_KEEPALIVE unsigned char* deSaltPepper(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project) {
 	for (int i = 3; i < project->size; i += 4) {
 		int sigma = sumNeighbors(inputBuf, i, project->w);

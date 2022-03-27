@@ -36,7 +36,6 @@ EMSCRIPTEN_KEEPALIVE void update() {
 	int erodeChecked = EM_ASM_INT(return erode.checked);
 	int openChecked = EM_ASM_INT(return open.checked);
 	int closeChecked = EM_ASM_INT(return close.checked);
-	int edgesChecked = EM_ASM_INT(return edges.checked);
 	int cornersChecked = EM_ASM_INT(return corners.checked);
 	int segmentsChecked = EM_ASM_INT(return segments.checked);
 	int segmentVisualizerChecked = EM_ASM_INT(return segmentVisualizer.checked);
@@ -61,7 +60,6 @@ EMSCRIPTEN_KEEPALIVE void update() {
 		auto integral = makeIntegralImage(bufferPool->getCurrent(), project);
 	}
 	if (thresholdChecked) otsu(bufferPool->getCurrent(), bufferPool, project);
-	if (edgesChecked) findEdges(bufferPool->getCurrent(), bufferPool, project);
 	unsigned char* processedImage = bufferPool->getCurrent();
 	if (cornersChecked) {
 		auto corners = findAllCorners(processedImage, project);
