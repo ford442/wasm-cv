@@ -19,7 +19,6 @@
 extern "C" {
 #endif
 
-EMSCRIPTEN_KEEPALIVE unsigned char* demoErode5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project);
 EMSCRIPTEN_KEEPALIVE void update();
 
 Wasmcv* project = new Wasmcv(640, 480);
@@ -64,7 +63,6 @@ EMSCRIPTEN_KEEPALIVE void update() {
 		auto integral = makeIntegralImage(bufferPool->getCurrent(), project);
 	}
 	if (thresholdChecked) otsu(bufferPool->getCurrent(), bufferPool, project);
-	if (erodeChecked) demoErode5x5(bufferPool->getCurrent(), bufferPool, project);
 	if (edgesChecked) findEdges(bufferPool->getCurrent(), bufferPool, project);
 	unsigned char* processedImage = bufferPool->getCurrent();
 	if (cornersChecked) {
