@@ -23,24 +23,6 @@ EMSCRIPTEN_KEEPALIVE std::vector<int> makeIntegralImage(unsigned char inputBuf[]
 	}
 	return integral;
 }
-EMSCRIPTEN_KEEPALIVE void computeHaarA(unsigned char inputBuf[], Wasmcv* project, int s) {
-}
-EMSCRIPTEN_KEEPALIVE std::vector<std::vector<int>> getGeomHaarLikeA(int s, int sx, int sy, int rx, int ry, int w, int h) {
-	std::vector<int> leftRectangle(4);
-	leftRectangle[0] = sx + rx;
-	leftRectangle[1] = sy + ry;
-	leftRectangle[2] = w;
-	leftRectangle[3] = h;
-	std::vector<int> rightRectangle(4);
-	rightRectangle[0] = sx + rx + w;
-	rightRectangle[1] = sy + ry;
-	rightRectangle[3] = w;
-	rightRectangle[4] = h;
-	std::vector<std::vector<int>> boundingBoxes(2);
-	boundingBoxes[0] = leftRectangle;
-	boundingBoxes[1] = rightRectangle;
-	return boundingBoxes;
-}
 
 #ifdef __cplusplus
 }

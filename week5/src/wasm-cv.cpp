@@ -29,8 +29,6 @@ int main() {
 	return 0;
 }
 
-
-
 EMSCRIPTEN_KEEPALIVE void update() {
 	int grayscaleChecked = EM_ASM_INT(return toGrayscale.checked);
 	int thresholdChecked = EM_ASM_INT(return threshold.checked);
