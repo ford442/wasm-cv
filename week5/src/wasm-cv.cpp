@@ -1,12 +1,3 @@
-/*
-* WASM-CV
-*
-* source ./emsdk_env.sh --build=Release
-*
-* emcc wasm-cv.cpp util.cpp bina.cpp gray.cpp rgba.cpp face.cpp -s TOTAL_MEMORY=512MB -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']" -s WASM=1 -O3 -std=c++1z -o ../wasm-cv.js
-*
-*/
-
 #include <iostream>
 #include <vector>
 #include "util.h"
@@ -20,7 +11,6 @@ extern "C" {
 #endif
 
 EMSCRIPTEN_KEEPALIVE void update();
-
 Wasmcv* project=new Wasmcv(640, 480);
 BufferPool* bufferPool=new BufferPool(640, 480);
 
