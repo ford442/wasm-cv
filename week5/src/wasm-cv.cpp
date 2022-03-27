@@ -19,7 +19,6 @@
 extern "C" {
 #endif
 
-EMSCRIPTEN_KEEPALIVE unsigned char* demoDilate5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project);
 EMSCRIPTEN_KEEPALIVE unsigned char* demoErode5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project);
 EMSCRIPTEN_KEEPALIVE void update();
 
@@ -65,7 +64,6 @@ EMSCRIPTEN_KEEPALIVE void update() {
 		auto integral = makeIntegralImage(bufferPool->getCurrent(), project);
 	}
 	if (thresholdChecked) otsu(bufferPool->getCurrent(), bufferPool, project);
-	if (dilateChecked) demoDilate5x5(bufferPool->getCurrent(), bufferPool, project);
 	if (erodeChecked) demoErode5x5(bufferPool->getCurrent(), bufferPool, project);
 	if (edgesChecked) findEdges(bufferPool->getCurrent(), bufferPool, project);
 	unsigned char* processedImage = bufferPool->getCurrent();
