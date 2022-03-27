@@ -18,7 +18,6 @@ EMSCRIPTEN_KEEPALIVE unsigned char* close3x3(unsigned char inputBuf[], BufferPoo
 EMSCRIPTEN_KEEPALIVE unsigned char* open3x3(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement3x3 k);
 EMSCRIPTEN_KEEPALIVE unsigned char* sub(unsigned char inputBufA[], unsigned char inputBufB[], BufferPool* pool, Wasmcv* project);
 EMSCRIPTEN_KEEPALIVE unsigned char* topHat3x3White(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement3x3 k);
-EMSCRIPTEN_KEEPALIVE unsigned char* topHat5x5White(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement5x5 k);
 EMSCRIPTEN_KEEPALIVE unsigned char* topHat3x3Black(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement3x3 k);
 EMSCRIPTEN_KEEPALIVE bool findCornerExternal(unsigned char inputBuf[], Wasmcv* project, int loc);
 EMSCRIPTEN_KEEPALIVE bool findCornerInternal(unsigned char inputBuf[], Wasmcv* project, int loc);

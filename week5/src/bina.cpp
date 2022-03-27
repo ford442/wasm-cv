@@ -141,11 +141,7 @@ EMSCRIPTEN_KEEPALIVE unsigned char* topHat3x3White(unsigned char inputBuf[], Buf
 	unsigned char* outputBuf = sub(inputBuf, openedImage, pool, project);
 	return outputBuf;
 }
-EMSCRIPTEN_KEEPALIVE unsigned char* topHat5x5White(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement5x5 k) {
-	unsigned char* openedImage = open5x5(inputBuf, pool, project, k);
-	unsigned char* outputBuf = sub(inputBuf, openedImage, pool, project);
-	return outputBuf;
-}
+
 EMSCRIPTEN_KEEPALIVE unsigned char* topHat3x3Black(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement3x3 k) {
 	unsigned char* closedImage = close3x3(inputBuf, pool, project, k);
 	unsigned char* outputBuf = sub(closedImage, inputBuf, pool, project);
