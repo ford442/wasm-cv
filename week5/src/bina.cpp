@@ -65,25 +65,7 @@ unsigned char* kDilate3x3(unsigned char inputBuf[], BufferPool* pool, Wasmcv* pr
 	}
 	return outputBuf;
 }
-unsigned char* kDilate5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement5x5 k) {
-	unsigned char* outputBuf = pool->getNew();
-	std::array<int, 25> o = project->offsets._5x5;
-	for (int i = 3; i < project->size; i += 4) {
-		outputBuf[i - 3] = 0;
-		outputBuf[i - 2] = 0;
-		outputBuf[i - 1] = 0;
-		if (inputBuf[i] == 255) {
-			for (int j = 0; j < 25; j += 1) { 
-				if (i + o[j] >= 0 && i + o[j] < project->size) {
-					outputBuf[i + o[j]] = k.kernel[j] == 255 || inputBuf[i + o[j]] == 255 ? 255 : 0;	
-				}
-			}
-		} else {
-			outputBuf[i] = 0;
-		}
-	}
-	return outputBuf;
-}
+
 unsigned char* kErode3x3(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement3x3 k) {
 	unsigned char* outputBuf = pool->getNew();
 	std::array<int, 9> o = project->offsets._3x3;
@@ -101,23 +83,7 @@ unsigned char* kErode3x3(unsigned char inputBuf[], BufferPool* pool, Wasmcv* pro
 	}
 	return outputBuf;
 }
-unsigned char* kErode5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement5x5 k) {
-	unsigned char* outputBuf = pool->getNew();
-	std::array<int, 25> o = project->offsets._5x5;
-	for (int i = 3; i < project->size; i += 4) {
-		outputBuf[i - 3] = 0;
-		outputBuf[i - 2] = 0;
-		outputBuf[i - 1] = 0;
-		int hits = 0;
-		for (int j = 0; j < 25; j += 1) {
-			if (k.kernel[j] == 255 && inputBuf[i + o[j]] == 255) {
-				hits += 1;
-			}
-		}
-		outputBuf[i] = hits == k.positives ? inputBuf[i] : 0;
-	}
-	return outputBuf;
-}
+
 EMSCRIPTEN_KEEPALIVE unsigned char* findEdges(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project) {
 	unsigned char* outputBuf = pool->getNew();
 	for (int i = 3; i < project->size; i += 4) {
@@ -153,21 +119,13 @@ EMSCRIPTEN_KEEPALIVE unsigned char* close3x3(unsigned char inputBuf[], BufferPoo
 	kErode3x3(pool->getCurrent(), pool, project, k);
 	return pool->getCurrent();
 }
-EMSCRIPTEN_KEEPALIVE unsigned char* close5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement5x5 k) {
-	kDilate5x5(inputBuf, pool, project, k);
-	kErode5x5(pool->getCurrent(), pool, project, k);
-	return pool->getCurrent();
-}
+
 EMSCRIPTEN_KEEPALIVE unsigned char* open3x3(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement3x3 k) {
 	kErode3x3(inputBuf, pool, project, k);
 	kDilate3x3(pool->getCurrent(), pool, project, k);
 	return pool->getCurrent();
 }
-EMSCRIPTEN_KEEPALIVE unsigned char* open5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement5x5 k) {
-	kErode5x5(inputBuf, pool, project, k);
-	kDilate5x5(pool->getCurrent(), pool, project, k);
-	return pool->getCurrent();
-}
+
 EMSCRIPTEN_KEEPALIVE unsigned char* sub(unsigned char inputBufA[], unsigned char inputBufB[], BufferPool* pool, Wasmcv* project) {
 	unsigned char* outputBuf = pool->getNew();
 	for (int i = 3; i < project->size; i += 4) {
@@ -193,11 +151,7 @@ EMSCRIPTEN_KEEPALIVE unsigned char* topHat3x3Black(unsigned char inputBuf[], Buf
 	unsigned char* outputBuf = sub(closedImage, inputBuf, pool, project);
 	return outputBuf;
 }
-EMSCRIPTEN_KEEPALIVE unsigned char* topHat5x5Black(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project, BinaryStructuringElement5x5 k) {
-	unsigned char* closedImage = close5x5(inputBuf, pool, project, k);
-	unsigned char* outputBuf = sub(closedImage, inputBuf, pool, project);
-	return outputBuf;
-}
+
 EMSCRIPTEN_KEEPALIVE bool findCornerExternal(unsigned char inputBuf[], Wasmcv* project, int loc) {
 	std::array<int, 4> o = project->offsets._2x2;
 	int hits = 0;

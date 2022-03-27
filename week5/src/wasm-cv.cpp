@@ -21,8 +21,6 @@ extern "C" {
 
 EMSCRIPTEN_KEEPALIVE unsigned char* demoDilate5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project);
 EMSCRIPTEN_KEEPALIVE unsigned char* demoErode5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project);
-EMSCRIPTEN_KEEPALIVE unsigned char* demoOpen5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project);
-EMSCRIPTEN_KEEPALIVE unsigned char* demoClose5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project);
 EMSCRIPTEN_KEEPALIVE void update();
 
 Wasmcv* project = new Wasmcv(640, 480);
@@ -32,22 +30,12 @@ int main() {
 	std::cout << "Hello world! Love, C++ main()\n";
 	return 0;
 }
-EMSCRIPTEN_KEEPALIVE unsigned char* demoDilate5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project) {
-	return kDilate5x5(inputBuf, pool, project, project->se._5x5iso);
-}
-EMSCRIPTEN_KEEPALIVE unsigned char* demoErode5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project) {
-	return kErode5x5(inputBuf, pool, project, project->se._5x5iso);
-}
-EMSCRIPTEN_KEEPALIVE unsigned char* demoOpen5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project) {
-	return open5x5(inputBuf, pool, project, project->se._5x5iso);
-}
-EMSCRIPTEN_KEEPALIVE unsigned char* demoClose5x5(unsigned char inputBuf[], BufferPool* pool, Wasmcv* project) {
-	return close5x5(inputBuf, pool, project, project->se._5x5iso);
-}
+
+
+
 EMSCRIPTEN_KEEPALIVE void update() {
 	int grayscaleChecked = EM_ASM_INT(return toGrayscale.checked);
 	int thresholdChecked = EM_ASM_INT(return threshold.checked);
-	int medianChecked = EM_ASM_INT(return median.checked);
 	int dilateChecked = EM_ASM_INT(return dilate.checked);
 	int erodeChecked = EM_ASM_INT(return erode.checked);
 	int openChecked = EM_ASM_INT(return open.checked);
@@ -80,8 +68,6 @@ EMSCRIPTEN_KEEPALIVE void update() {
 	if (medianChecked) median3x3(bufferPool->getCurrent(), bufferPool, project);
 	if (dilateChecked) demoDilate5x5(bufferPool->getCurrent(), bufferPool, project);
 	if (erodeChecked) demoErode5x5(bufferPool->getCurrent(), bufferPool, project);
-	if (openChecked) demoOpen5x5(bufferPool->getCurrent(), bufferPool, project);
-	if (closeChecked) demoClose5x5(bufferPool->getCurrent(), bufferPool, project);
 	if (edgesChecked) findEdges(bufferPool->getCurrent(), bufferPool, project);
 	unsigned char* processedImage = bufferPool->getCurrent();
 	if (cornersChecked) {
