@@ -12,13 +12,13 @@
 
 	<div id="output">
 	<!-- Here's the output canvas, which is coincidentally where output is displayed-->
-	<canvas id="output-canvas"></canvas> 
+	<canvas id="output-canvas"></canvas>
 
 	</div>
 
 	<div id="input">
 	<!-- Here's our video element, used to grab input from the webcam -->
-	<video id="video" preload="auto" loop src="../week3/intro.mp4" autoplay></video>
+	<video id="video" preload="auto" src="../week3/intro.mp4" loop playsinline autoplay></video>
 
 	<!-- Here's the output overlay canvas, used for displaying visualizations of CV data -->
 	<canvas id="output-overlay-canvas"></canvas>
@@ -44,7 +44,20 @@
 			<p><input id="threshold" type="checkbox" class="stack" name="threshold">
 			<label for="threshold">otsu()</label></p>
 
+			<p><input id="median3x3" type="checkbox" class="stack" name="median">
+			<label for="median3x3">median3x3()</label></p>
 
+			<p><input id="kDilate5x5" type="checkbox" class="stack" name="dilate">
+			<label for="kDilate5x5">kDilate5x5(_5x5iso)</label></p>
+
+			<p><input id="kErode5x5" type="checkbox" class="stack" name="erode">
+			<label for="kErode5x5">kErode5x5(_5x5iso)</label></p>
+
+			<p><input id="open5x5" type="checkbox" class="stack" name="open">
+			<label for="open5x5">open5x5(_5x5iso)</label></p>
+
+			<p><input id="close5x5" type="checkbox" class="stack" name="close">
+			<label for="close5x5">close5x5(_5x5iso)</label></p>
 
 			<p><input id="findEdges" type="checkbox" class="stack" name="edges">
 			<label for="findEdges">findEdges()</label></p>
