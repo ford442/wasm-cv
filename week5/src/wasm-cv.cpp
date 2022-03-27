@@ -32,10 +32,6 @@ int main() {
 EMSCRIPTEN_KEEPALIVE void update() {
 	int grayscaleChecked = EM_ASM_INT(return toGrayscale.checked);
 	int thresholdChecked = EM_ASM_INT(return threshold.checked);
-	int dilateChecked = EM_ASM_INT(return dilate.checked);
-	int erodeChecked = EM_ASM_INT(return erode.checked);
-	int openChecked = EM_ASM_INT(return open.checked);
-	int closeChecked = EM_ASM_INT(return close.checked);
 	int cornersChecked = EM_ASM_INT(return corners.checked);
 	int segmentsChecked = EM_ASM_INT(return segments.checked);
 	int segmentVisualizerChecked = EM_ASM_INT(return segmentVisualizer.checked);

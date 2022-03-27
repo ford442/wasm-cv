@@ -26,26 +26,6 @@ unsigned char* conv3(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv
 	}
 	return outputBuf;
 }
-EMSCRIPTEN_KEEPALIVE unsigned char* dilate(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project) {
-	for (int i = 3; i < project->size; i += 4) {
-		int sigma = sumNeighbors(inputBuf, i, project->w);
-		outputBuf[i - 3] = 0;
-		outputBuf[i - 2] = 0;
-		outputBuf[i - 1] = 0;
-		outputBuf[i] = sigma > 0 ? 255 : inputBuf[i];
-	}
-	return outputBuf;
-}
-EMSCRIPTEN_KEEPALIVE unsigned char* erode(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project) {
-	for (int i = 3; i < project->size; i += 4) {
-		int sigma = sumNeighbors(inputBuf, i, project->w);
-		outputBuf[i - 3] = 0;
-		outputBuf[i - 2] = 0;
-		outputBuf[i - 1] = 0;
-		outputBuf[i] = sigma < 2040 ? 0 : inputBuf[i];
-	}
-	return outputBuf;
-}
 EMSCRIPTEN_KEEPALIVE unsigned char* deSaltPepper(unsigned char inputBuf[], unsigned char outputBuf[], Wasmcv* project) {
 	for (int i = 3; i < project->size; i += 4) {
 		int sigma = sumNeighbors(inputBuf, i, project->w);
