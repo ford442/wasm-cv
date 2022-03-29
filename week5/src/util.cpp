@@ -6,9 +6,12 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+EM_JS(int,Si,(),{
+return parseInt(window.innerHeight,10);
+})
 EMSCRIPTEN_KEEPALIVE Wasmcv* init(int w, int h) {
-	Wasmcv* project=new Wasmcv(640, 480);
+	int Siz=Si();
+	Wasmcv* project=new Wasmcv(Siz, Siz);
 	return project;
 }
 EMSCRIPTEN_KEEPALIVE bool isInImageBounds(Wasmcv* project, int offset) {
