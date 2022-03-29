@@ -1,8 +1,8 @@
 let t1, t2;
 let loopId;
 let inputImgData;
-const webcamWidth=640;
-const webcamHeight=480;
+const webcamWidth=window.innerHeight;
+const webcamHeight=window.innerHeight;
 const outputCanvas=document.getElementById("output-canvas");
 const outputOverlayCanvas=document.getElementById("output-overlay-canvas");
 const inputCanvas=document.getElementById("input-canvas");
