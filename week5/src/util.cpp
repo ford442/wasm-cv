@@ -6,11 +6,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-EM_JS(int,Si,(),{
+EM_JS(int,Sii,(),{
 return parseInt(window.innerHeight,10);
 })
 EMSCRIPTEN_KEEPALIVE Wasmcv* init(int w, int h) {
-	int Siz=Si();
+	int Siz=Sii();
 	Wasmcv* project=new Wasmcv(Siz, Siz);
 	return project;
 }
