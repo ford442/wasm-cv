@@ -27,14 +27,14 @@ int main() {
 }
 
 EMSCRIPTEN_KEEPALIVE void update() {
-	int grayscaleChecked=EM_ASM_INT(return toGrayscale.checked);
-	int thresholdChecked=EM_ASM_INT(return threshold.checked);
-	int cornersChecked=EM_ASM_INT(return corners.checked);
-	int segmentsChecked=EM_ASM_INT(return segments.checked);
-	int segmentVisualizerChecked=EM_ASM_INT(return segmentVisualizer.checked);
-	int centroidsChecked=EM_ASM_INT(return centroids.checked);
-	int perimeterChecked=EM_ASM_INT(return perimeter.checked);
-	int boundingChecked=EM_ASM_INT(return bounding.checked);
+	int grayscaleChecked=1;
+	int thresholdChecked=1;
+	int cornersChecked=0;
+	int segmentsChecked=1;
+	int segmentVisualizerChecked=1;
+	int centroidsChecked=0;
+	int perimeterChecked=0;
+	int boundingChecked=0;
 	EM_ASM(
 		outputOverlayCtx.clearRect(0, 0, webcamWidth, webcamHeight);
 		t1=performance.now();
