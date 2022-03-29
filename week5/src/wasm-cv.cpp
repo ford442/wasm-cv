@@ -11,11 +11,12 @@ extern "C" {
 #endif
 
 EMSCRIPTEN_KEEPALIVE void update();
-Wasmcv* project=new Wasmcv(640, 480);
-BufferPool* bufferPool=new BufferPool(640, 480);
+unsigned int Siz=EM_ASM_INT({return parseInt(window.innerHeight,10);});
+Wasmcv* project=new Wasmcv(Siz, Siz);
+BufferPool* bufferPool=new BufferPool(Siz, Siz);
 
 int main() {
-	std::cout << "Hello world! Love, C++ main()\n";
+	std::cout << "Object detection on!\n";
 	return 0;
 }
 
