@@ -11,11 +11,13 @@ extern "C" {
 #endif
 
 EMSCRIPTEN_KEEPALIVE void update();
-unsigned int Siz=EM_ASM_INT({return parseInt(window.innerHeight,10);});
-Wasmcv* project=new Wasmcv(Siz, Siz);
-BufferPool* bufferPool=new BufferPool(Siz, Siz);
+
 
 int main() {
+	unsigned int Siz=EM_ASM_INT({return parseInt(window.innerHeight,10);});
+Wasmcv* project=new Wasmcv(Siz, Siz);
+BufferPool* bufferPool=new BufferPool(Siz, Siz);
+	
 	std::cout << "Object detection on!\n";
 	return 0;
 }
