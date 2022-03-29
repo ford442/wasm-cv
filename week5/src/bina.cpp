@@ -173,10 +173,10 @@ EMSCRIPTEN_KEEPALIVE std::vector<int> getConnectedComponents(unsigned char input
 		if (inputBuf[i] == 255) {
 			int16_t priorNeighborLabels[2]={0};
 			if (isInImageBounds(project, i + project->offsets._4n[0])) {
-				priorNeighborLabels[0]=map[i + project->offsets._4n[0]]; // should i actually find the parent node here?
+				priorNeighborLabels[0]=map[i + project->offsets._4n[0]]; // should I actually find the parent node here?
 			}
 			if (isInImageBounds(project, i + project->offsets._4n[1]) && ((i - 3) / 4) % project->w != 0) {
-				priorNeighborLabels[1]=map[i + project->offsets._4n[1]]; // should i actually find the parent node here?
+				priorNeighborLabels[1]=map[i + project->offsets._4n[1]]; // should I actually find the parent node here?
 			}
 			int m;
 			if (priorNeighborLabels[0] == 0 && priorNeighborLabels[1] == 0) {
