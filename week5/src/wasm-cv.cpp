@@ -9,14 +9,16 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+EM_JS(int,Si,(),{
+return parseInt(window.innerHeight,10);
+})
 EMSCRIPTEN_KEEPALIVE void update();
-
-
-int main() {
-	unsigned int Siz=EM_ASM_INT({return parseInt(window.innerHeight,10);});
+int Siz=Si();
 Wasmcv* project=new Wasmcv(Siz, Siz);
 BufferPool* bufferPool=new BufferPool(Siz, Siz);
+	
+
+int main() {
 	
 	std::cout << "Object detection on!\n";
 	return 0;
