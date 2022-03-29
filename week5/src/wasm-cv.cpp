@@ -10,6 +10,8 @@
 extern "C" {
 #endif
 EM_JS(int,Si,(),{
+		console.log(parseInt(window.innerHeight,10));
+
 return parseInt(window.innerHeight,10);
 })
 EMSCRIPTEN_KEEPALIVE void update();
