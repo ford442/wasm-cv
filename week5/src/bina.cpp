@@ -221,10 +221,10 @@ EMSCRIPTEN_KEEPALIVE unsigned char* segMapToImage(std::vector<int> map, BufferPo
 	float g=float(rand()) / float(RAND_MAX);
 	float b=float(rand()) / float(RAND_MAX);
 	for (int i=3; i < project->size; i += 4) {
-		outputBuf[i - 3]=(unsigned char)(float(map[i]) * float(r));
-		outputBuf[i - 2]=(unsigned char)(float(map[i]) * float(g));
-		outputBuf[i - 1]=(unsigned char)(float(map[i]) * float(b));
-		outputBuf[i]=255;
+		// outputBuf[i - 3]=(unsigned char)(float(map[i]) * float(r));
+		// outputBuf[i - 2]=(unsigned char)(float(map[i]) * float(g));
+		// outputBuf[i - 1]=(unsigned char)(float(map[i]) * float(b));
+		outputBuf[i]=(float)map[i];
 	}
 	return outputBuf;
 }
